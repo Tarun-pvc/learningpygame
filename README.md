@@ -9,8 +9,8 @@ In this repo, there are 2 games
 * All "games" are under development!*
 
 I wish to soon add:
-More Sound effects
-Actual playability
-Levels
-Splash menus
-Customization!
+-> More Sound effects
+-> Actual playability
+-> Levels
+-> Splash menus
+-> Customization!
