@@ -3,13 +3,15 @@ import os
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 800
-FPS = 60
+FPS = 10
+speed = 5
+PLAYER_SIZE = 100
 
 WIN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Pokemon!")
 
 spritesheet = pygame.image.load(os.path.join(
-    'Assets', 'transparent_spritesheet.png')).convert_alpha()
+    'Assets', 'new_transparent.png')).convert_alpha()
 
 # os.path.join just makes sure that there are no directory issues
 
@@ -23,40 +25,71 @@ def getimage(sprites, width, height, x, y):
     return image
 
 
-sprite_size = 50
-# declaring a frame for the sprite. This will be our player.
-player = getimage(spritesheet, sprite_size, sprite_size, 0, sprite_size)
-playersprites_up = [pygame.transform.scale(getimage(spritesheet, sprite_size, sprite_size, 24, 24), (150, 150)), pygame.transform.scale(
-    getimage(spritesheet, sprite_size, sprite_size, 0, 0), (150, 150)), pygame.transform.scale(getimage(spritesheet, sprite_size, sprite_size, sprite_size, 0), (150, 150))]
+y_unit = 2400/4
+x_unit = 1840/4
+sprite_sequences = []
 
-playersprites_down = [pygame.transform.scale(getimage(spritesheet, sprite_size, sprite_size, sprite_size*2, sprite_size), (150, 150)), pygame.transform.scale(
-    getimage(spritesheet, sprite_size, sprite_size, sprite_size*2, 0), (150, 150)), pygame.transform.scale(getimage(spritesheet, sprite_size, sprite_size, 3*sprite_size, 0), (150, 150))]
 
-playersprites_left = [pygame.transform.scale(getimage(spritesheet, 50, 50, 200, 50), (150, 150)), pygame.transform.scale(
-    getimage(spritesheet, 50, 50, 200, 0), (150, 150)), pygame.transform.scale(getimage(spritesheet, 50, 50, 250, 0), (150, 150))]
+def scale(surface):
+    retsurf = pygame.transform.scale(surface, (PLAYER_SIZE, PLAYER_SIZE))
+    return retsurf
 
-playersprites_right = [pygame.transform.scale(getimage(spritesheet, 50, 50, 300, 50), (150, 150)), pygame.transform.scale(
-    getimage(spritesheet, 50, 50, 300, 0), (150, 150)), pygame.transform.scale(getimage(spritesheet, 50, 50, 250, 50), (150, 150))]
+
+def split():
+    x = 0
+    y = 0
+    sprite_sequence = []
+    for i in range(0, 4):
+        sprite_sequence = []
+        for j in range(0, 4):
+            sprite_sequence.append(
+                scale(getimage(spritesheet, x_unit, y_unit, x, y)))
+            x += x_unit
+        sprite_sequences.append(sprite_sequence)
+        y += y_unit
+
+
+split()
 
 BG = pygame.image.load('Assets/Player_House.png')
 BG = pygame.transform.scale(BG, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
 
-def draw():
+def controls(playerPos, pressed, index):
+    dirn = 1
+    if pressed[pygame.K_s]:
+        dirn = 1
+        draw(playerPos, dirn, index)
+    else:
+        draw(playerPos, dirn, 1)
+
+
+def draw(playerPos, dirn, index):
     WIN.blit(BG, (0, 0))
-    WIN.blit(playersprites_up[0], (10, 500))
+    WIN.blit(sprite_sequences[dirn-1][index], playerPos)
     pygame.display.update()
+
+
+pygame.mixer.init()
+music = pygame.mixer.music.load('pallet_town.mp3')
+pygame.mixer.music.play(-1)
 
 
 def main_loop():
     running = True
     clock = pygame.time.Clock()
+    playerPos = pygame.Rect(10, 500, PLAYER_SIZE, PLAYER_SIZE)
+
+    index = 0
     while running:
+        index = (index+1) % 4
         clock.tick(FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-        draw()
+
+        pressed = pygame.key.get_pressed()
+        controls(playerPos, pressed, index)
 
     pygame.quit()
 
