@@ -41,6 +41,7 @@ def split():
     sprite_sequence = []
     for i in range(0, 4):
         sprite_sequence = []
+        x = 0
         for j in range(0, 4):
             sprite_sequence.append(
                 scale(getimage(spritesheet, x_unit, y_unit, x, y)))
@@ -59,6 +60,21 @@ def controls(playerPos, pressed, index):
     dirn = 1
     if pressed[pygame.K_s]:
         dirn = 1
+        draw(playerPos, dirn, index)
+
+    # dirn = 2
+    elif pressed[pygame.K_d]:
+        dirn = 2
+        draw(playerPos, dirn, index)
+
+    # dirn = 3
+    elif pressed[pygame.K_a]:
+        dirn = 3
+        draw(playerPos, dirn, index)
+
+    # dirn = 4
+    elif pressed[pygame.K_w]:
+        dirn = 4
         draw(playerPos, dirn, index)
     else:
         draw(playerPos, dirn, 1)
