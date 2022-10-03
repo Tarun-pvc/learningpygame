@@ -10,7 +10,7 @@ speed = 20
 PLAYER_SIZE = 100
 
 WIN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption("Pokemon!")
+pygame.display.set_caption("GameBoy Emulator")
 
 spritesheet = pygame.image.load(os.path.join(
     'Assets', 'new_transparent.png')).convert_alpha()
