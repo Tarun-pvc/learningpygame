@@ -1,29 +1,31 @@
+
 import pygame
 import os
 
-from fight_game import draw1
 
+# Constants and Window
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 800
 FPS = 10
-speed = 20
+SPEED = 20
 PLAYER_SIZE = 100
-
 WIN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("GameBoy Emulator")
-
-spritesheet = pygame.image.load(os.path.join(
+SPRITESHEET = pygame.image.load(os.path.join(
     'Assets', 'new_transparent.png')).convert_alpha()
 
 # os.path.join just makes sure that there are no directory issues
 
-BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
 
 
 def getimage(sprites, width, height, x, y):
-    # makes a pygame 'surface' on which we can draw a part of the spritesheet.
+    # makes a pygame 'surface' on which we can draw a part of the SPRITESHEET.
     # putting a sprite over the surface we previously made
-    image = pygame.Surface((width, height)).convert_alpha()
+    image = pygame.Surface((width, height)).convert()
+    image.fill(WHITE)  # Without this line, the background is black automatically black. However, if we make the black part transparent, the black parts of the character are also made transparent. >:(
+    image.set_colorkey(WHITE)  # makes the White part transparent.
+
     # (0,0,width,height) is actually the area in which pygame checks for the sprite.
     image.blit(sprites, (0, 0), (x, y, width, height))
     return image
@@ -48,7 +50,7 @@ def split():
         x = 0
         for j in range(0, 4):
             sprite_sequence.append(
-                scale(getimage(spritesheet, x_unit, y_unit, x, y)))
+                scale(getimage(SPRITESHEET, x_unit, y_unit, x, y)))
             x += x_unit
         sprite_sequences.append(sprite_sequence)
         y += y_unit
@@ -68,25 +70,25 @@ def controls(playerPos, pressed, index):
     global dirn
     if pressed[pygame.K_s] and playerPos.y <= SCREEN_HEIGHT-PLAYER_SIZE-50:
         dirn = 1
-        playerPos.y += speed
+        playerPos.y += SPEED
         draw(playerPos, dirn, index)
 
     # dirn = 2
     elif pressed[pygame.K_d] and playerPos.x < SCREEN_WIDTH-PLAYER_SIZE:
         dirn = 2
-        playerPos.x += speed
+        playerPos.x += SPEED
         draw(playerPos, dirn, index)
 
     # dirn = 3
     elif pressed[pygame.K_a] and playerPos.x >= 0:
         dirn = 3
-        playerPos.x -= speed
+        playerPos.x -= SPEED
         draw(playerPos, dirn, index)
 
     # dirn = 4
     elif pressed[pygame.K_w] and playerPos.y >= 55:
         dirn = 4
-        playerPos.y -= speed
+        playerPos.y -= SPEED
         draw(playerPos, dirn, index)
     else:
         if dirn == 3:
