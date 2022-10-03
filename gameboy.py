@@ -1,10 +1,12 @@
 import pygame
 import os
 
+from fight_game import draw1
+
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 800
 FPS = 10
-speed = 5
+speed = 20
 PLAYER_SIZE = 100
 
 WIN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -14,6 +16,8 @@ spritesheet = pygame.image.load(os.path.join(
     'Assets', 'new_transparent.png')).convert_alpha()
 
 # os.path.join just makes sure that there are no directory issues
+
+BLACK = (0, 0, 0)
 
 
 def getimage(sprites, width, height, x, y):
@@ -56,28 +60,39 @@ BG = pygame.image.load('Assets/Player_House.png')
 BG = pygame.transform.scale(BG, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
 
+dirn = 1
+
+
 def controls(playerPos, pressed, index):
-    dirn = 1
-    if pressed[pygame.K_s]:
+
+    global dirn
+    if pressed[pygame.K_s] and playerPos.y <= SCREEN_HEIGHT-PLAYER_SIZE-50:
         dirn = 1
+        playerPos.y += speed
         draw(playerPos, dirn, index)
 
     # dirn = 2
-    elif pressed[pygame.K_d]:
+    elif pressed[pygame.K_d] and playerPos.x < SCREEN_WIDTH-PLAYER_SIZE:
         dirn = 2
+        playerPos.x += speed
         draw(playerPos, dirn, index)
 
     # dirn = 3
-    elif pressed[pygame.K_a]:
+    elif pressed[pygame.K_a] and playerPos.x >= 0:
         dirn = 3
+        playerPos.x -= speed
         draw(playerPos, dirn, index)
 
     # dirn = 4
-    elif pressed[pygame.K_w]:
+    elif pressed[pygame.K_w] and playerPos.y >= 55:
         dirn = 4
+        playerPos.y -= speed
         draw(playerPos, dirn, index)
     else:
-        draw(playerPos, dirn, 1)
+        if dirn == 3:
+            draw(playerPos, dirn, 0)
+        else:
+            draw(playerPos, dirn, 1)
 
 
 def draw(playerPos, dirn, index):
@@ -103,7 +118,6 @@ def main_loop():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-
         pressed = pygame.key.get_pressed()
         controls(playerPos, pressed, index)
 
