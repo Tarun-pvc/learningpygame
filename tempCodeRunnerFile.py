@@ -1,2 +1,3 @@
-music = pygame.mixer.music.load('pallet_town.mp3')
-pygame.mixer.music.play(-1)
+
+# def check(playerPos):
+#     if playerPos.x > SCREEN_WIDTH - 100 and playerPos.x <

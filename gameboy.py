@@ -1,7 +1,10 @@
 
+from doctest import BLANKLINE_MARKER
+from turtle import screensize
 import pygame
 import os
-
+pygame.init()
+pygame.font.init()
 
 # Constants and Window
 SCREEN_WIDTH = 800
@@ -68,7 +71,7 @@ dirn = 1
 def controls(playerPos, pressed, index):
 
     global dirn
-    if pressed[pygame.K_s] and playerPos.y <= SCREEN_HEIGHT-PLAYER_SIZE-50:
+    if pressed[pygame.K_s] and playerPos.y <= SCREEN_HEIGHT-PLAYER_SIZE-51:
         dirn = 1
         playerPos.y += SPEED
         draw(playerPos, dirn, index)
@@ -103,6 +106,18 @@ def draw(playerPos, dirn, index):
     pygame.display.update()
 
 
+def check(playerPos):
+    if playerPos.x < SCREEN_WIDTH-150 and playerPos.x > SCREEN_WIDTH - 350 and playerPos.y > SCREEN_HEIGHT-200:
+        surface = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT/4))
+        myfont = pygame.font.SysFont('Comic Sans MS', 30)
+        textsurface = myfont.render(
+            "You cant go outside! You're in quarantine.", False, (255, 255, 255))
+        surface.fill((0, 0, 0))
+        surface.blit(textsurface, (0, 0))
+        WIN.blit(surface, (0, 0))
+        pygame.display.update()
+
+
 pygame.mixer.init()
 music = pygame.mixer.music.load('pallet_town.mp3')
 pygame.mixer.music.play(-1)
@@ -122,6 +137,7 @@ def main_loop():
                 running = False
         pressed = pygame.key.get_pressed()
         controls(playerPos, pressed, index)
+        check(playerPos)
 
     pygame.quit()
 
