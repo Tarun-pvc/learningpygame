@@ -64,8 +64,13 @@ split()
 BG = pygame.image.load('Assets/Player_House.png')
 BG = pygame.transform.scale(BG, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
-
 dirn = 1
+
+
+def checkConditions(playerPos):
+    if playerPos.x <= 200 and playerPos.y <= 200:
+        return False
+    return True
 
 
 def controls(playerPos, pressed, index):
@@ -89,7 +94,7 @@ def controls(playerPos, pressed, index):
         draw(playerPos, dirn, index)
 
     # dirn = 4
-    elif pressed[pygame.K_w] and playerPos.y >= 55:
+    elif pressed[pygame.K_w] and playerPos.y >= 55 and checkConditions(playerPos):
         dirn = 4
         playerPos.y -= SPEED
         draw(playerPos, dirn, index)
@@ -109,7 +114,7 @@ def draw(playerPos, dirn, index):
 def check(playerPos):
     if playerPos.x < SCREEN_WIDTH-150 and playerPos.x > SCREEN_WIDTH - 350 and playerPos.y > SCREEN_HEIGHT-200:
         surface = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT/4))
-        myfont = pygame.font.SysFont('Comic Sans MS', 30)
+        myfont = pygame.font.SysFont('blackadderitc', 50)
         textsurface = myfont.render(
             "You cant go outside! You're in quarantine.", False, (255, 255, 255))
         surface.fill((0, 0, 0))
