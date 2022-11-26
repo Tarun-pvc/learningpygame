@@ -17,3 +17,4 @@
 - Endless platformer
 - TowerDefense 
 - Multi Player Game
+- Game with purchases
