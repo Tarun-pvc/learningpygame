@@ -1,23 +1,19 @@
-# pygame repo: a description
+# gameVentures: Python- Pygame! :snake:
 
-This repo only contains the legends of my adventures on pygame!
+## A Brief description of the repository:
+- This is one of my gameVentures! I'm testing out different game libraries/ engines like pygame, raylib, etc.
+- In this particular repository, I will post my pygame-based games as I learn more about the library.
+- I will include a README file in each game, where there will be more information about the game.
+- I will update this repository as i get more game ideas and as i get more time to make them.
 
-Age: 19
-Year:2022
-BTech, 2nd year
+---
 
-In this repo, there are 2 games
+## Game ideas:
+- Pokemon GameBoy Version clone
 
-1. A Game that I think will turn out to be something like pacman 
-2. A game that's basically a ripoff of pokemon!
+---
 
-* All "games" are under development!*
-
-I wish to soon add:
--> More Sound effects
--> Actual playability
--> Levels
--> Splash menus
--> Customization!
-
-I'll keep updating these games regularly as i find more time to implement more features into the games.
+## Potential game topics: 
+- Endless platformer
+- TowerDefense 
+- Multi Player Game
