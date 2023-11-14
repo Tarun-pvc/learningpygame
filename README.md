@@ -10,7 +10,8 @@
 
 ## Game ideas:
 - Pokemon GameBoy Version clone
-- Space invaders 
+- Space invaders
+- More to Come!
 ---
 
 ## Potential game topics: 
